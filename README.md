@@ -31,11 +31,11 @@ Pilih salah satu metode instalasi/menjalankan aplikasi di bawah ini:
 ### Cara 2: Menggunakan Docker
 Jika kamu sudah memiliki Docker terinstal di komputermu, cukup jalankan:
 1. Buka Terminal di folder project.
-2. Pastikan port 8989 kosong, lalu jalankan docker compose:
+2. Jalankan docker compose:
    ```bash
    docker-compose up -d
    ```
-3. Buka browser dan akses: `http://localhost:8989` (Atau IP VPS kamu dengan port 8989)
+3. Buka browser dan akses: `http://localhost:8000`
 
 ### Cara 3: Menggunakan XAMPP/Laragon
 1. Pindahkan folder project ke dalam `htdocs` (XAMPP) atau `www` (Laragon).
@@ -45,12 +45,7 @@ Jika kamu sudah memiliki Docker terinstal di komputermu, cukup jalankan:
 
 ## Setup & Seeder Database 💾
 
-Secara *default*, aplikasi ini sudah dikonfigurasi untuk menggunakan **MySQL** (sesuai konfigurasi Docker terbaru). Jika dijalankan menggunakan Docker, aplikasi akan mencoba melakukan koneksi ke database MySQL Native di Host (VPS) via `host.docker.internal`.
-
-### Menyiapkan MySQL
-1. Buat database baru bernama `infoparkir` di VPS/MySQL kamu.
-2. Impor file `database_migration.sql` ke dalam database tersebut.
-3. (Opsional) Jika username/password database kamu bukan `root` dan kosong, kamu bisa menyesuaikan variabel `DB_USER` dan `DB_PASS` di dalam file `docker-compose.yml`.
+Secara *default*, aplikasi ini sudah dikonfigurasi untuk menggunakan **SQLite** (`application/database/infoparkir.sqlite`). Semua struktur tabel sudah dibuat.
 
 ### Menambahkan User Dummy (Seeder)
 Untuk masuk ke sistem admin, kamu bisa men-generate data pengguna tambahan dengan menggunakan CLI CodeIgniter.
