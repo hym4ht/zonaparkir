@@ -14,10 +14,9 @@ services:
       # Akses database MySQL native di VPS melalui host.docker.internal
       - "host.docker.internal:host-gateway"
     environment:
-      - CI_ENV=production
-      # === SESUAIKAN DENGAN KREDENSIAL MYSQL DI VPS KAMU ===
-      - DB_HOST=host.docker.internal
-      - DB_USER=infoparkir        # ganti jika nama user-nya berbeda
-      - DB_PASS=password_kuat_disini  # ganti dengan password yang kamu set di MySQL
-      - DB_NAME=infoparkir
+      CI_ENV: "production"
+      DB_HOST: "host.docker.internal"
+      DB_USER: "infoparkir"
+      DB_PASS: "password_kuat_disini"
+      DB_NAME: "infoparkir"
     restart: unless-stopped
