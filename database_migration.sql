@@ -18,9 +18,11 @@ CREATE TABLE IF NOT EXISTS `slot` (
 
 -- ============================================================
 -- 2. Tambah kolom updated_at ke tabel slot (jika sudah ada tapi belum punya kolom ini)
+-- (Dikomentari karena tablenya sudah dibuat dengan kolom ini secara default,
+--  dan sintaks 'IF NOT EXISTS' tidak didukung di MySQL < 8.0.19)
 -- ============================================================
-ALTER TABLE `slot`
-    ADD COLUMN IF NOT EXISTS `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+-- ALTER TABLE `slot`
+--     ADD COLUMN `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 
 -- ============================================================
 -- 3. Isi data awal slot A, B, C, D (jika belum ada)
