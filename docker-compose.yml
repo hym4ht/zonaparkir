@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: infoparkir_web
+    ports:
+      # Port 8000 diakses dari host, 80 diakses di dalam container Apache
+      - "8000:80"
+    volumes:
+      # Menghubungkan folder host ke dalam container agar bisa Live Edit tanpa build ulang
+      - .:/var/www/html
+    environment:
+      # Environment Variable jika dibutuhkan di masa depan
+      - CI_ENV=development
+    restart: unless-stopped
