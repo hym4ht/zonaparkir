@@ -31,6 +31,42 @@ if ($conn->query($sql_db) === TRUE) {
     die("Error creating database: " . $conn->error . "\n");
 }
 
+// === FITUR DOCKER SUPPORT: Buat user untuk container jika dijalankan secara lokal sebagai root ===
+$docker_compose_file = __DIR__ . '/docker-compose.yml';
+if (file_exists($docker_compose_file) && ($user === 'root' || empty($user))) {
+    $docker_compose_content = file_get_contents($docker_compose_file);
+    
+    $target_user = 'infoparkir';
+    $target_pass = 'password_kuat_disini';
+    
+    if (preg_match('/DB_USER\s*[:=]\s*([^\s#]+)/', $docker_compose_content, $matches)) {
+        $target_user = trim($matches[1], "\"'");
+    }
+    if (preg_match('/DB_PASS\s*[:=]\s*([^\s#]+)/', $docker_compose_content, $matches)) {
+        $target_pass = trim($matches[1], "\"'");
+    }
+    
+    if ($target_user !== 'root' && !empty($target_user)) {
+        echo "Creating Docker database user '$target_user' and granting privileges...\n";
+        
+        $sql_user = "CREATE USER IF NOT EXISTS '$target_user'@'%' IDENTIFIED BY '$target_pass'";
+        if ($conn->query($sql_user) === TRUE) {
+            echo "User '$target_user'@'%' created or already exists.\n";
+        } else {
+            echo "Warning creating user: " . $conn->error . "\n";
+        }
+        
+        $sql_grant = "GRANT ALL PRIVILEGES ON `$db`.* TO '$target_user'@'%'";
+        if ($conn->query($sql_grant) === TRUE) {
+            echo "Privileges granted to '$target_user'@'%'.\n";
+        } else {
+            echo "Warning granting privileges: " . $conn->error . "\n";
+        }
+        
+        $conn->query("FLUSH PRIVILEGES");
+    }
+}
+
 // Tutup koneksi sementara dan sambungkan langsung ke database target
 $conn->close();
 
