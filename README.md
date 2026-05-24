@@ -45,25 +45,46 @@ Jika kamu sudah memiliki Docker terinstal di komputermu, cukup jalankan:
 
 ## Setup & Seeder Database 💾
 
-Secara *default*, aplikasi ini sudah dikonfigurasi untuk menggunakan **SQLite** (`application/database/infoparkir.sqlite`). Semua struktur tabel sudah dibuat.
+Aplikasi ini mendukung dua jenis database: **SQLite** (bawaan development) dan **MySQL/MariaDB** (untuk production/Docker).
 
-### Menambahkan User Dummy (Seeder)
-Untuk masuk ke sistem admin, kamu bisa men-generate data pengguna tambahan dengan menggunakan CLI CodeIgniter.
-Jalankan perintah ini di Terminal (pastikan berada di *root* direktori project):
+### A. Menggunakan MySQL (Lokal atau Docker)
+Jika Anda menggunakan MySQL, ikuti langkah berikut untuk menginisialisasi database dan tabel:
 
+#### 1. Inisialisasi Database & Migrasi
+* **Jika berjalan di Lokal:**
+  Pastikan kredensial MySQL di `application/config/database.php` sudah benar, lalu jalankan:
+  ```bash
+  php setup_mysql.php
+  ```
+* **Jika berjalan di Docker:**
+  Jalankan perintah ini untuk melakukan migrasi langsung ke database di dalam container:
+  ```bash
+  docker exec -it infoparkir_web php setup_mysql.php
+  ```
+
+#### 2. Menjalankan Seeder (Membuat Akun Admin & Petugas)
+* **Jika berjalan di Lokal:**
+  ```bash
+  php index.php seeder user
+  ```
+* **Jika berjalan di Docker:**
+  ```bash
+  docker exec -it infoparkir_web php index.php seeder user
+  ```
+
+### B. Menggunakan SQLite (Default Development)
+Secara *default*, file database SQLite sudah tersedia di `application/database/infoparkir.sqlite`. Anda hanya perlu menjalankan seeder jika diperlukan:
 ```bash
 php index.php seeder user
 ```
 
-**Daftar Akun yang Dihasilkan:**
+**Daftar Akun yang Dihasilkan oleh Seeder:**
 | Username | Password | Keterangan |
 | :--- | :--- | :--- |
 | `admin` | `admin123` | Administrator Utama |
 | `admin2` | `admin123` | Administrator Dua |
 | `petugas1` | `petugas123` | Petugas Parkir Pagi |
 | `petugas2` | `petugas123` | Petugas Parkir Malam |
-
-*(Catatan: Jika kamu ingin menggunakan MySQL, silakan buat database baru di phpMyAdmin, impor file `database_migration.sql`, dan sesuaikan konfigurasi koneksinya di `application/config/database.php`)*.
 
 ---
 

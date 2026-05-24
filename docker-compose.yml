@@ -15,9 +15,9 @@ services:
       - "host.docker.internal:host-gateway"
     environment:
       - CI_ENV=production
-      # Konfigurasi Database MySQL
+      # === SESUAIKAN DENGAN KREDENSIAL MYSQL DI VPS KAMU ===
       - DB_HOST=host.docker.internal
-      - DB_USER=root
-      - DB_PASS=
+      - DB_USER=infoparkir        # ganti jika nama user-nya berbeda
+      - DB_PASS=password_kuat_disini  # ganti dengan password yang kamu set di MySQL
       - DB_NAME=infoparkir
     restart: unless-stopped
