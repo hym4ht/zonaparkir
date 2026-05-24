@@ -75,12 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
     'dsn'      => '',
-    'hostname' => 'localhost',
-    'username' => '',
-    'password' => '',
-    // Arahkan ke lokasi file .sqlite kamu, misalnya ditaruh di dalam folder application/
-    'database' => FCPATH . 'application/database/infoparkir.sqlite', 
-    'dbdriver' => 'sqlite3', // Ubah driver ke sqlite3
+    'hostname' => getenv('DB_HOST') ?: 'localhost',
+    'username' => getenv('DB_USER') ?: 'root',
+    'password' => getenv('DB_PASS') ?: '',
+    'database' => getenv('DB_NAME') ?: 'infoparkir', 
+    'dbdriver' => 'mysqli', // Ubah driver ke mysqli untuk MySQL
     'dbprefix' => '',
     'pconnect' => FALSE,
     'db_debug' => (ENVIRONMENT !== 'production'),

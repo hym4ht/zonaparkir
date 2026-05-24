@@ -1,6 +1,5 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /infoparkir/
 
     # Jika file/folder benar-benar ada, langsung sajikan
     RewriteCond %{REQUEST_FILENAME} !-f
